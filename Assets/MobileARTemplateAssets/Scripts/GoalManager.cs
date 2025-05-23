@@ -194,6 +194,18 @@ public class GoalManager : MonoBehaviour
             }
             CompleteGoal();
         }
+
+      
+        GameObject uiCanvas = GameObject.Find("UICanvas");
+        if (uiCanvas != null)
+        {
+            Canvas canvas = uiCanvas.GetComponent<Canvas>();
+            if (canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            }
+        }
+
     }
 
     void CompleteGoal()
@@ -279,6 +291,8 @@ public class GoalManager : MonoBehaviour
     /// </summary>
     public void StartCoaching()
     {
+
+
         if (m_OnboardingGoals != null)
         {
             m_OnboardingGoals.Clear();
@@ -325,7 +339,12 @@ public class GoalManager : MonoBehaviour
                 m_StepList[i].stepObject.SetActive(false);
             }
         }
+#if !UNITY_EDITOR
         GameManager.Instance.StartAR();
+#endif
+
+            // 确保UICanvas保持Screen Space模式
+
         //ARSessionInstance.enabled = true;
     }
 }
